@@ -72,8 +72,8 @@ http.createServer((req, res) => {
   try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch { res.writeHead(400); res.end('Invalid URL'); return; }
   // Only public assets may be served. Never expose .env, source code, or repository metadata.
-  const relative = pathname === '/' ? 'index.html' : pathname.replace(/^\\/+/, '');
-  const segments = relative.split(/[\\\\/]+/);
+  const relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  const segments = relative.split(/[\\/]+/);
   const publicFiles = new Set(['index.html', 'favicon.ico', 'manifest.webmanifest', 'robots.txt']);
   const publicDirectory = segments[0] === 'public' && segments.length > 1;
   if (segments.some(segment => !segment || segment === '.' || segment === '..' || segment.startsWith('.')) ||
