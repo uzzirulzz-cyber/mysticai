@@ -22,9 +22,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.calculateBottomPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -147,7 +144,6 @@ private fun MysticApp(model: MysticViewModel = viewModel()) {
     }
 
     val selectedProject = state.projects.firstOrNull { it.id == state.selectedProjectId }
-    val systemBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -181,7 +177,6 @@ private fun MysticApp(model: MysticViewModel = viewModel()) {
             BottomNavigation(
                 selected = state.activeTab,
                 onSelect = model::setTab,
-                modifier = Modifier.padding(bottom = systemBottom),
             )
         }
     }
