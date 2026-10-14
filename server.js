@@ -71,7 +71,17 @@ http.createServer((req, res) => {
   let pathname;
   try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch { res.writeHead(400); res.end('Invalid URL'); return; }
+  // Only public assets may be served. Never expose .env, source code, or repository metadata.
   const relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  const segments = relative.split(/[\\/]+/);
+  const publicFiles = new Set(['index.html', 'favicon.ico', 'manifest.webmanifest', 'robots.txt']);
+  const publicDirectory = segments[0] === 'public' && segments.length > 1;
+  if (segments.some(segment => !segment || segment === '.' || segment === '..' || segment.startsWith('.')) ||
+      (!publicDirectory && !publicFiles.has(relative))) {
+    res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' });
+    res.end('Not found');
+    return;
+  }
   const file = path.resolve(root, relative);
   if (!file.startsWith(root + path.sep) && file !== path.join(root, 'index.html')) { res.writeHead(403); res.end('Forbidden'); return; }
   fs.readFile(file, (error, contents) => {
