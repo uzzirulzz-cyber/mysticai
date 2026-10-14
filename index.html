@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1b3e">
+  <meta name="description" content="Turn your idea into a working web app with five collaborating AI agents and a live preview.">
+  <title>Mystic AI — Build something real</title>
+  <style>
+    :root{color-scheme:light;--navy:#0d1b3e;--blue:#24499e;--indigo:#526fe0;--gold:#f0b429;--bg:#f8f9ff;--white:#fff;--muted:#687287;--border:#e3e7f0;--green:#178355;--red:#bd3347;--shadow:0 14px 45px #0d1b3e12}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:var(--bg);color:var(--navy);font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #f0b429;outline-offset:3px}a{color:inherit;text-decoration:none}.wrap{width:min(1140px,calc(100% - 40px));margin:auto}
+    .top{position:sticky;top:0;z-index:10;border-bottom:1px solid #e5e7f0;background:#ffffffeb;backdrop-filter:blur(14px)}.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:750;letter-spacing:-.4px}.mark{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:var(--gold);font-size:16px}.nav-links{display:flex;gap:27px;color:#667084;font-size:12px}.nav-links a:hover{color:var(--navy)}.btn{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 15px;border:1px solid var(--border);border-radius:8px;background:white;color:var(--navy);font-size:12px;font-weight:650;cursor:pointer;transition:.15s}.btn:hover{transform:translateY(-1px);border-color:#aeb8d2}.btn.primary{border-color:var(--navy);background:var(--navy);color:white}.btn.primary:hover{background:var(--blue)}.btn.gold{border-color:var(--gold);background:var(--gold);color:var(--navy)}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .hero{overflow:hidden;position:relative;padding:73px 0 51px;background:radial-gradient(ellipse 85% 70% at 50% 0%,#dfe8ff 0%,#f8f9ff 75%)}.hero:after{position:absolute;inset:0;background:radial-gradient(ellipse 38% 30% at 82% 18%,#fff0c26b,transparent 75%);content:"";pointer-events:none}.hero-inner{position:relative;z-index:1;text-align:center}.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border:1px solid #dfe4f1;border-radius:30px;background:#ffffffd9;color:#536079;font-size:10px}.pill i{width:7px;height:7px;border-radius:50%;background:var(--green)}h1{max-width:750px;margin:20px auto 13px;font-size:clamp(40px,6vw,68px);font-weight:800;letter-spacing:-3px;line-height:1.04}h1 em{color:var(--indigo);font-style:normal}.hero-copy{max-width:610px;margin:0 auto 21px;color:var(--muted);font-size:14px;line-height:1.8}.hero-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.hero-foot{margin-top:12px;color:#7a8395;font-size:10px}
+    .workspace{padding:50px 0 66px}.section-top{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:19px}.eyebrow{margin-bottom:5px;color:var(--indigo);font-size:10px;font-weight:750;letter-spacing:1.2px;text-transform:uppercase}.section-title{margin:0;font-size:clamp(25px,4vw,34px);font-weight:760;letter-spacing:-1.1px}.subtle{color:var(--muted);font-size:11px}.app-grid{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(0,1.4fr);gap:15px;align-items:start}.panel{min-width:0;border:1px solid var(--border);border-radius:12px;background:var(--white);box-shadow:var(--shadow)}.panel-head{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:0 15px;border-bottom:1px solid var(--border)}.panel-head h3{margin:0;font-size:12px;font-weight:750}.panel-head span{color:var(--muted);font-size:10px}.composer{padding:15px}.label{display:block;margin-bottom:7px;font-size:11px;font-weight:700}.prompt{width:100%;min-height:135px;resize:vertical;padding:11px;border:1px solid #dce1ec;border-radius:8px;background:#fff;color:var(--navy);font-size:12px;line-height:1.65}.prompt::placeholder{color:#9199a9}.upload{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px;padding:11px;border:1px dashed #cbd2e0;border-radius:8px;background:#fbfcff}.upload strong{display:block;font-size:11px}.upload small{display:block;margin-top:3px;color:var(--muted);font-size:9px}.file-list{display:grid;gap:6px;margin-top:8px}.file-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 9px;border:1px solid var(--border);border-radius:7px;font-size:10px}.file-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-remove{border:0;background:transparent;color:#788297;cursor:pointer}.file-remove:hover{color:var(--red)}.compose-foot{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:13px}.privacy{max-width:200px;color:#80899b;font-size:9px}.workspace-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}.agent-panel{padding:13px 14px}.agent-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;font-size:11px;font-weight:740}.agent-list{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.agent{min-width:0;padding:8px 6px;border:1px solid var(--border);border-radius:7px;background:#fbfcff;text-align:center}.agent span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.agent-name{font-size:9px;font-weight:700}.agent-state{margin-top:4px;color:#8992a3;font-size:8px}.agent.active{border-color:#f0cf73;background:#fffaf0}.agent.active .agent-state{color:#9a6a00}.agent.done{border-color:#add9c5;background:#f3fbf7}.agent.done .agent-state{color:var(--green)}.agent.failed{border-color:#e7b6bd;background:#fff6f7}.agent.failed .agent-state{color:var(--red)}
+    .preview{overflow:hidden}.preview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;border-bottom:1px solid var(--border)}.preview-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:680}.preview-actions{display:flex;gap:6px}.tiny-btn{min-height:29px;padding:0 9px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--navy);font-size:9px;font-weight:650;cursor:pointer}.tiny-btn:disabled{opacity:.45;cursor:not-allowed}.iframe-wrap{min-height:350px;padding:11px;background:#f2f4f8}.placeholder{min-height:328px;display:grid;place-content:center;justify-items:center;padding:20px;border:1px dashed #d0d6e2;border-radius:8px;background:#fafbfe;color:#778195;text-align:center}.placeholder strong{margin-bottom:6px;color:#293858;font-size:12px}.placeholder p{max-width:280px;margin:0;font-size:10px}.placeholder .spark{margin-bottom:8px;color:var(--indigo);font-size:25px}.iframe-wrap iframe{display:block;width:100%;height:328px;border:1px solid #e1e5ed;border-radius:7px;background:#fff}.preview-status{padding:8px 13px;border-top:1px solid var(--border);color:var(--muted);font-size:9px}.tasks{margin-top:12px}.task-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px;border-bottom:1px solid #edf0f5}.task-row:last-child{border-bottom:0}.task-copy{min-width:0}.task-prompt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:650}.task-detail{margin-top:3px;color:#7e889a;font-size:9px}.task-status{color:#717b8d;font-size:9px;text-transform:capitalize}.task-status.running{color:#8a6500}.task-status.done{color:var(--green)}.task-status.failed{color:var(--red)}.error{display:none;margin-top:10px;padding:9px 11px;border:1px solid #eac5ca;border-radius:7px;background:#fff6f7;color:#a92c40;font-size:10px}.error.visible{display:block}.agent-notes{display:none;padding:0 13px 12px}.agent-notes.visible{display:block}.agent-note{margin-top:6px;padding:8px;border-left:2px solid #cbd4ee;background:#f8f9fc;font-size:9px;line-height:1.55}.agent-note strong{display:block;margin-bottom:2px;color:#35466c}
+    .features{padding:56px 0;background:#fff}.center{text-align:center}.features h2,.pricing h2,.faq h2{margin:5px 0 10px;font-size:clamp(24px,4vw,35px);letter-spacing:-.8px}.features-intro,.pricing-intro{max-width:580px;margin:0 auto;color:var(--muted);font-size:12px;line-height:1.7}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:25px}.feature{height:100%;padding:18px;border:1px solid var(--border);border-radius:10px;background:#fbfcff}.feature-icon{width:34px;height:34px;display:grid;place-items:center;margin-bottom:13px;border-radius:9px;background:#edf1ff;font-size:16px}.feature h3{margin:0 0 5px;font-size:12px}.feature p{margin:0;color:var(--muted);font-size:10px;line-height:1.7}
+    .pricing{padding:60px 0}.billing-note{max-width:650px;margin:14px auto 0;padding:9px 12px;border:1px solid #e9dba9;border-radius:8px;background:#fffaf0;color:#735a16;font-size:10px}.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:22px;text-align:left}.plan{position:relative;padding:20px;border:1px solid var(--border);border-radius:12px;background:#fff}.plan.featured{border:2px solid var(--indigo);box-shadow:0 9px 28px #526fe019}.badge{position:absolute;top:0;right:14px;padding:4px 9px;border-radius:0 0 7px 7px;background:var(--indigo);color:#fff;font-size:8px;font-weight:700}.plan h3{margin:0 0 5px;font-size:13px}.price{margin:10px 0 2px;font-size:32px;font-weight:800;letter-spacing:-1.1px}.price small{font-size:11px;font-weight:500;letter-spacing:0}.plan p{min-height:34px;margin:0 0 13px;color:var(--muted);font-size:10px}.plan ul{min-height:99px;margin:0 0 16px;padding:0;list-style:none}.plan li{margin:7px 0;color:#4b566b;font-size:10px}.plan li:before{margin-right:7px;color:var(--green);content:"✓";font-weight:800}.plan .btn{width:100%;font-size:10px}
+    .faq{padding:53px 0;background:#fff}.faq-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:35px}.faq-list{display:grid;gap:8px}.faq-item{border:1px solid var(--border);border-radius:8px;background:#fbfcff}.faq-item summary{padding:12px;cursor:pointer;font-size:11px;font-weight:700}.faq-item p{margin:0;padding:0 12px 12px;color:var(--muted);font-size:10px;line-height:1.65}
+    .footer{padding:26px 0;background:var(--navy);color:#fff}.footer-row{display:flex;align-items:center;justify-content:space-between;gap:15px}.footer-note{color:#ffffff9c;font-size:9px}
+    @media(max-width:900px){.app-grid{grid-template-columns:1fr}.workspace-grid{grid-template-columns:1fr}.iframe-wrap{min-height:320px}.iframe-wrap iframe{height:298px}.placeholder{min-height:298px}}
+    @media(max-width:640px){.wrap{width:calc(100% - 28px)}.nav{height:59px}.nav-links{gap:12px;font-size:10px}.nav-links a:nth-child(2),.nav-links a:nth-child(4){display:none}.nav>.btn{min-height:34px;padding:0 10px;font-size:10px}.hero{padding:52px 0 37px}h1{letter-spacing:-1.8px}.hero-copy{font-size:12px}.workspace{padding:37px 0 47px}.section-top{align-items:flex-start;flex-direction:column}.agent-list{grid-template-columns:repeat(2,1fr)}.agent:last-child{grid-column:span 2}.feature-grid,.plan-grid{grid-template-columns:1fr}.pricing{padding:45px 0}.plan ul,.plan p{min-height:0}.faq-grid{grid-template-columns:1fr;gap:15px}.footer-row{align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header class="top"><nav class="nav wrap" aria-label="Main navigation">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true">✳</span>Mystic AI</a>
+    <div class="nav-links"><a href="#features">Product</a><a href="#workspace">Workspace</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div>
+    <a class="btn primary" href="#workspace">Start building <span aria-hidden="true">↗</span></a>
+  </nav></header>
+  <main id="top">
+    <section class="hero"><div class="hero-inner wrap">
+      <div class="pill"><i></i> Five focused agents · one workspace</div>
+      <h1>Describe an app.<br><em>Build a real first version.</em></h1>
+      <p class="hero-copy">Turn a plain-language brief into a working web page. Five AI agents plan, design, architect, build, and review your project while you follow their progress.</p>
+      <div class="hero-actions"><a class="btn primary" href="#workspace">Open the live workspace <span aria-hidden="true">↓</span></a><a class="btn" href="#pricing">See plans</a></div>
+      <div class="hero-foot">Your Gemini key stays on the server. Your project history stays in this browser.</div>
+    </div></section>
+
+    <section class="workspace wrap" id="workspace">
+      <div class="section-top"><div><div class="eyebrow">The builder</div><h2 class="section-title">What should we build?</h2></div><div class="subtle">Prompt → five agents → downloadable HTML</div></div>
+      <div class="app-grid">
+        <section class="panel" aria-labelledby="briefTitle">
+          <div class="panel-head"><h3 id="briefTitle">Project brief</h3><span>Private to your session</span></div>
+          <div class="composer">
+            <label class="label" for="prompt">Describe your website or web app</label>
+            <textarea class="prompt" id="prompt" maxlength="6000" placeholder="Build a clear, modern website for my neighborhood bakery. Include a menu, opening hours, location, and a way to get in touch."></textarea>
+            <div class="upload">
+              <div><strong>Reference files</strong><small>Images, PDFs, and text · 3 MB total</small></div>
+              <label class="btn" for="fileInput">＋ Add files</label><input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,text/plain,text/markdown,text/csv,application/json,text/html,text/css,text/javascript" multiple hidden>
+            </div>
+            <div class="file-list" id="fileList"></div>
+            <div class="compose-foot"><span class="privacy">Files go to Gemini to create your requested project. Don’t attach secrets.</span><button class="btn primary gold" id="buildButton" type="button">✦ Build with 5 agents</button></div>
+            <div class="error" id="errorBox" role="alert"></div>
+          </div>
+        </section>
+        <div class="workspace-grid">
+          <section class="panel agent-panel" aria-label="Five AI agents">
+            <div class="agent-title"><span>Five-agent team</span><span class="subtle" id="teamState">Ready</span></div>
+            <div class="agent-list" id="agentList">
+              <div class="agent" data-agent="planner"><span class="agent-name">Planner</span><span class="agent-state">Ready</span></div>
+              <div class="agent" data-agent="designer"><span class="agent-name">Designer</span><span class="agent-state">Ready</span></div>
+              <div class="agent" data-agent="architect"><span class="agent-name">Architect</span><span class="agent-state">Ready</span></div>
+              <div class="agent" data-agent="builder"><span class="agent-name">Builder</span><span class="agent-state">Ready</span></div>
+              <div class="agent" data-agent="reviewer"><span class="agent-name">Reviewer</span><span class="agent-state">Ready</span></div>
+            </div>
+          </section>
+          <section class="panel preview" aria-labelledby="previewHeading">
+            <div class="preview-head"><span class="preview-label" id="previewHeading">Live app preview</span><div class="preview-actions"><button class="tiny-btn" id="openPreview" type="button" disabled>Open</button><button class="tiny-btn" id="downloadHtml" type="button" disabled>Download HTML</button></div></div>
+            <div class="iframe-wrap" id="previewWrap"><div class="placeholder"><span class="spark" aria-hidden="true">✳</span><strong>Your built app will appear here</strong><p>Describe what you want and the Builder agent will return a complete HTML page.</p></div></div>
+            <div class="preview-status" id="previewStatus" aria-live="polite">Ready. Run a build to start all five agents.</div>
+          </section>
+          <section class="panel" aria-labelledby="historyHeading">
+            <div class="panel-head"><h3 id="historyHeading">Recent builds</h3><button class="tiny-btn" id="clearHistory" type="button">Clear history</button></div>
+            <div class="tasks" id="taskHistory"><div class="task-row"><span class="subtle">Completed builds will appear here.</span></div></div>
+            <div class="agent-notes" id="agentNotes"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features"><div class="wrap center">
+      <div class="eyebrow">A team, not a text box</div><h2>Five specialists. One useful result.</h2>
+      <p class="features-intro">Each agent has a focused role. Their work is visible, their outputs are reviewed, and the finished HTML can be opened, downloaded, and edited.</p>
+      <div class="feature-grid">
+        <article class="feature"><div class="feature-icon">🧭</div><h3>Planner</h3><p>Turns your brief into a clear set of requirements and acceptance checks.</p></article>
+        <article class="feature"><div class="feature-icon">✎</div><h3>Designer</h3><p>Sets a cohesive visual direction and a responsive page structure.</p></article>
+        <article class="feature"><div class="feature-icon">⌘</div><h3>Architect</h3><p>Chooses a practical, self-contained implementation for your request.</p></article>
+        <article class="feature"><div class="feature-icon">⚒</div><h3>Builder</h3><p>Creates a complete HTML app for the live, sandboxed preview.</p></article>
+        <article class="feature"><div class="feature-icon">✓</div><h3>Reviewer</h3><p>Checks the generated page for missing requirements and common issues.</p></article>
+        <article class="feature"><div class="feature-icon">◫</div><h3>Your browser</h3><p>Keeps your saved build history locally, without creating an account.</p></article>
+      </div>
+    </div></section>
+
+    <section class="pricing" id="pricing"><div class="wrap center">
+      <div class="eyebrow">Pricing</div><h2>Simple plans, clear limits.</h2>
+      <p class="pricing-intro">Prices are in USD. Choose a plan that suits how you build.</p>
+      <div class="billing-note">Pricing preview: payment, accounts, and plan-based usage limits are not connected yet. No plan will charge you from this page.</div>
+      <div class="plan-grid">
+        <article class="plan"><h3>Free</h3><div class="price">$0 <small>/ month</small></div><p>Explore the builder and make a start.</p><ul><li>Personal workspace</li><li>Five-agent builds</li><li>Live preview and HTML export</li><li>Local browser history</li></ul><a class="btn" href="#workspace">Try the builder</a></article>
+        <article class="plan featured"><span class="badge">MOST POPULAR</span><h3>Pro</h3><div class="price">$19 <small>/ month</small></div><p>For independent makers building regularly.</p><ul><li>Everything in Free</li><li>Higher build limits planned</li><li>Priority model access planned</li><li>Project export planned</li></ul><a class="btn primary" href="#workspace">Explore Pro</a></article>
+        <article class="plan"><h3>Team</h3><div class="price">$49 <small>/ month</small></div><p>For small teams working together.</p><ul><li>Everything in Pro</li><li>Shared workspaces planned</li><li>Team roles planned</li><li>Central billing planned</li></ul><a class="btn" href="#workspace">Explore Team</a></article>
+      </div>
+    </div></section>
+
+    <section class="faq" id="faq"><div class="wrap faq-grid">
+      <div><div class="eyebrow">FAQ</div><h2>Good to know.</h2><p class="subtle">Straight answers about what this version does today.</p></div>
+      <div class="faq-list">
+        <details class="faq-item"><summary>Does the builder really use AI?</summary><p>Yes. The build endpoint calls Google Gemini from a server-side function. Add GEMINI_API_KEY locally or to your Vercel project to enable generation.</p></details>
+        <details class="faq-item"><summary>Where are my files and saved builds?</summary><p>Selected files are sent to the Gemini endpoint for your build. Build history and generated HTML are stored in this browser’s local storage. There is no account or cloud project database.</p></details>
+        <details class="faq-item"><summary>Are subscriptions available?</summary><p>No. The USD prices are a preview. Checkout, subscriptions, and plan enforcement have not been implemented.</p></details>
+        <details class="faq-item"><summary>Can I publish the generated site?</summary><p>Download the generated HTML and deploy it separately. This version does not push projects to GitHub or deploy generated apps automatically.</p></details>
+      </div>
+    </div></section>
+  </main>
+  <footer class="footer"><div class="footer-row wrap"><a class="brand" href="#top"><span class="mark">✳</span>Mystic AI</a><span class="footer-note">Five agents · Gemini-powered · Prices shown in USD · Checkout not connected</span></div></footer>
+  <script>
+    (() => {
+      'use strict';
+      const KEY = 'mystic_build_history_v1';
+      const MAX_FILES = 3 * 1024 * 1024;
+      const MAX_HISTORY = 8;
+      const roles = ['planner', 'designer', 'architect', 'builder', 'reviewer'];
+      const labels = { planner: 'Planner', designer: 'Designer', architect: 'Architect', builder: 'Builder', reviewer: 'Reviewer' };
+      const state = { files: [], builds: loadHistory(), selectedId: null, running: false };
+      const $ = id => document.getElementById(id);
+      const escapeHtml = text => String(text).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+      const bytesFromBase64 = value => Math.floor(value.length * 3 / 4);
+      const formatBytes = value => value < 1024 * 1024 ? `${Math.max(1, Math.round(value / 1024))} KB` : `${(value / 1048576).toFixed(1)} MB`;
+      function loadHistory() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+          return Array.isArray(saved) ? saved.filter(build => build && typeof build.id === 'string' && typeof build.prompt === 'string' && typeof build.html === 'string').slice(0, MAX_HISTORY) : [];
+        } catch (error) {
+          console.error('Could not load local build history:', error);
+          return [];
+        }
+      }
+      function saveHistory() {
+        try { localStorage.setItem(KEY, JSON.stringify(state.builds.slice(0, MAX_HISTORY))); }
+        catch (error) { showError(`Could not save build history in this browser: ${error.message}`); }
+      }
+      function showError(message) {
+        const box = $('errorBox');
+        box.textContent = message;
+        box.classList.add('visible');
+      }
+      function clearError() { $('errorBox').textContent = ''; $('errorBox').classList.remove('visible'); }
+      function selectedBuild() { return state.builds.find(build => build.id === state.selectedId) || null; }
+      function renderFiles() {
+        $('fileList').innerHTML = state.files.map((file, index) => `<div class="file-row"><span class="file-name">${escapeHtml(file.name)} · ${formatBytes(bytesFromBase64(file.data))}</span><button class="file-remove" type="button" data-remove-file="${index}" aria-label="Remove ${escapeHtml(file.name)}">Remove</button></div>`).join('');
+      }
+      function setAgents(build) {
+        document.querySelectorAll('[data-agent]').forEach(node => {
+          const key = node.dataset.agent;
+          const status = build?.agents?.[key]?.status || (build?.status === 'running' ? 'Waiting' : build?.status === 'failed' ? 'Failed' : 'Ready');
+          node.className = `agent${status === 'Working' ? ' active' : status === 'Complete' ? ' done' : status === 'Failed' ? ' failed' : ''}`;
+          node.querySelector('.agent-state').textContent = status;
+        });
+        $('teamState').textContent = build?.status === 'running' ? 'Building…' : build?.status === 'done' ? 'Complete' : build?.status === 'failed' ? 'Failed' : 'Ready';
+      }
+      function renderHistory() {
+        const reversed = state.builds.slice().reverse();
+        $('taskHistory').innerHTML = reversed.length ? reversed.map(build => `<button class="task-row" type="button" data-build-id="${escapeHtml(build.id)}" style="width:100%;border:0;background:${build.id === state.selectedId ? '#f4f6fc' : '#fff'};text-align:left;cursor:pointer"><span class="task-copy"><span class="task-prompt">${escapeHtml(build.prompt)}</span><span class="task-detail">${escapeHtml(new Date(build.createdAt).toLocaleString())}</span></span><span class="task-status ${escapeHtml(build.status)}">${escapeHtml(build.status)}</span></button>`).join('') : '<div class="task-row"><span class="subtle">Completed builds will appear here.</span></div>';
+        const build = selectedBuild();
+        setAgents(build);
+        renderPreview(build);
+        const notes = $('agentNotes');
+        if (build?.agents) {
+          notes.innerHTML = roles.filter(role => build.agents[role]?.output).map(role => `<div class="agent-note"><strong>${labels[role]}</strong>${escapeHtml(build.agents[role].output)}</div>`).join('');
+          notes.classList.toggle('visible', Boolean(notes.innerHTML));
+        } else { notes.innerHTML = ''; notes.classList.remove('visible'); }
+      }
+      function renderPreview(build) {
+        const html = build?.status === 'done' ? build.html : '';
+        $('previewStatus').textContent = build?.status === 'running' ? 'The five-agent team is working. This tab must stay open until the response arrives.' : build?.status === 'failed' ? (build.error || 'Build failed.') : html ? 'Build complete. Preview runs in a sandbox; download the HTML to use it elsewhere.' : 'Ready. Run a build to start all five agents.';
+        $('openPreview').disabled = !html;
+        $('downloadHtml').disabled = !html;
+        if (html) {
+          $('previewWrap').innerHTML = '<iframe title="Generated application preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>';
+          $('previewWrap').querySelector('iframe').srcdoc = html;
+        } else {
+          const message = build?.status === 'running' ? 'Your five agents are building this app' : build?.status === 'failed' ? 'The build did not finish' : 'Your built app will appear here';
+          $('previewWrap').innerHTML = `<div class="placeholder"><span class="spark" aria-hidden="true">${build?.status === 'running' ? '◌' : '✳'}</span><strong>${escapeHtml(message)}</strong><p>${build?.status === 'failed' ? escapeHtml(build.error || 'Check the error message and try again.') : 'Describe what you want and the Builder agent will return a complete HTML page.'}</p></div>`;
+        }
+      }
+      function readFile(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error(`Could not read ${file.name}.`));
+          reader.onload = () => resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: String(reader.result).split(',')[1] || '' });
+          reader.readAsDataURL(file);
+        });
+      }
+      async function chooseFiles(event) {
+        const selected = Array.from(event.target.files || []);
+        event.target.value = '';
+        clearError();
+        if (state.files.length + selected.length > 5) return showError('Choose up to five reference files per build.');
+        const total = state.files.reduce((sum, item) => sum + bytesFromBase64(item.data), 0) + selected.reduce((sum, file) => sum + file.size, 0);
+        if (total > MAX_FILES) return showError('The total attachment size must be 3 MB or less.');
+        const allowed = /^(image\/(png|jpeg|webp|gif)|application\/pdf|text\/(plain|markdown|csv|html|css|javascript)|application\/json)$/;
+        const invalid = selected.find(file => !allowed.test(file.type) && !/\.(txt|md|csv|json|html|css|js)$/i.test(file.name));
+        if (invalid) return showError(`${invalid.name} is not a supported image, PDF, or text file.`);
+        try {
+          for (const file of selected) state.files.push(await readFile(file));
+          renderFiles();
+        } catch (error) { showError(error.message); }
+      }
+      async function runBuild(build) {
+        state.running = true;
+        const requestFiles = build.files;
+        build.files = [];
+        build.status = 'running';
+        build.agents = Object.fromEntries(roles.map(role => [role, { status: 'Working', output: '' }]));
+        saveHistory();
+        renderHistory();
+        $('buildButton').disabled = true;
+        clearError();
+        let stepIndex = 0;
+        const steps = ['Planning and design agents are collaborating…', 'Architect is structuring the build…', 'Builder is generating your app…', 'Reviewer is checking the result…'];
+        const timer = setInterval(() => { $('previewStatus').textContent = steps[Math.min(stepIndex++, steps.length - 1)]; }, 2800);
+        try {
+          const response = await fetch('/api/build', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: build.prompt, files: requestFiles || [] })
+          });
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(payload.error || `The server returned ${response.status}.`);
+          if (typeof payload.html !== 'string' || !payload.html.toLowerCase().includes('<html')) throw new Error('The builder did not return a valid HTML page. Please try again.');
+          build.html = payload.html;
+          build.agents = payload.agents || build.agents;
+          build.status = 'done';
+          build.error = '';
+          saveHistory();
+          renderHistory();
+        } catch (error) {
+          build.status = 'failed';
+          build.error = error.message || 'The build failed unexpectedly.';
+          saveHistory();
+          renderHistory();
+          showError(build.error);
+        } finally {
+          clearInterval(timer);
+          state.running = false;
+          $('buildButton').disabled = false;
+          $('buildButton').textContent = '✦ Build with 5 agents';
+        }
+      }
+      function submitBuild() {
+        if (state.running) return;
+        const prompt = $('prompt').value.trim();
+        if (!prompt) { showError('Describe the app you want before starting the build.'); $('prompt').focus(); return; }
+        const build = {
+          id: crypto.randomUUID(),
+          prompt,
+          files: state.files.slice(),
+          createdAt: Date.now(),
+          status: 'running',
+          html: '',
+          agents: Object.fromEntries(roles.map(role => [role, { status: 'Waiting', output: '' }]))
+        };
+        state.files = [];
+        state.builds.push(build);
+        state.builds = state.builds.slice(-MAX_HISTORY);
+        state.selectedId = build.id;
+        $('prompt').value = '';
+        renderFiles();
+        renderHistory();
+        runBuild(build);
+      }
+      function downloadBuild() {
+        const build = selectedBuild();
+        if (!build?.html) return;
+        const url = URL.createObjectURL(new Blob([build.html], { type: 'text/html;charset=utf-8' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${build.prompt.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48) || 'mystic-app'}.html`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+      $('fileInput').addEventListener('change', chooseFiles);
+      $('fileList').addEventListener('click', event => {
+        const button = event.target.closest('[data-remove-file]');
+        if (button) { state.files.splice(Number(button.dataset.removeFile), 1); renderFiles(); }
+      });
+      $('buildButton').addEventListener('click', submitBuild);
+      $('prompt').addEventListener('keydown', event => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') submitBuild(); });
+      $('taskHistory').addEventListener('click', event => {
+        const row = event.target.closest('[data-build-id]');
+        if (row) { state.selectedId = row.dataset.buildId; renderHistory(); }
+      });
+      $('clearHistory').addEventListener('click', () => {
+        if (state.running) return showError('Wait for the current build to finish before clearing history.');
+        state.builds = [];
+        state.selectedId = null;
+        saveHistory();
+        renderHistory();
+      });
+      $('downloadHtml').addEventListener('click', downloadBuild);
+      $('openPreview').addEventListener('click', () => {
+        const html = selectedBuild()?.html;
+        if (!html) return;
+        const url = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+        const opened = window.open(url, '_blank');
+        if (!opened) { URL.revokeObjectURL(url); showError('Allow pop-ups to open the preview in a new tab.'); }
+        else {
+          opened.opener = null;
+          setTimeout(() => URL.revokeObjectURL(url), 60000);
+        }
+      });
+      let interruptedBuild = false;
+      state.builds.forEach(build => {
+        if (build.status === 'running') {
+          build.status = 'failed';
+          build.error = 'This build was interrupted when the previous browser session ended. Submit the brief again to restart it.';
+          interruptedBuild = true;
+        }
+      });
+      if (interruptedBuild) saveHistory();
+      if (state.builds.length) state.selectedId = state.builds[state.builds.length - 1].id;
+      renderFiles();
+      renderHistory();
+      if (!window.crypto?.randomUUID) $('buildButton').disabled = true;
+    })();
+  </script>
+</body>
+</html>

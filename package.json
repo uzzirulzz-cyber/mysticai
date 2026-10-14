@@ -1,0 +1,14 @@
+{
+  "name": "mystic-ai-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A five-agent AI website builder with a live preview",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
