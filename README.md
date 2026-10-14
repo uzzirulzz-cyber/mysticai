@@ -18,6 +18,10 @@ Import this repository in Vercel, keep the project root as the Root Directory, a
 
 Set `GEMINI_MODEL` only if you need to select another supported Gemini model. Its default is `gemini-2.5-flash`.
 
+## Android app
+
+The native Kotlin and Jetpack Compose app is in [`android/`](./android/README.md). Open that folder in Android Studio with JDK 17 and Android SDK 35. It connects to the same server-side `/api/build` endpoint; do not put a Gemini API key in the Android app. The Android APK is published to the GitHub release linked from the site footer after the Android build workflow succeeds.
+
 ## Pricing
 
 Displayed prices ($19/month Pro and $49/month Team) are informational examples selected for this landing page. Payment processing, accounts, and subscription/plan enforcement are not implemented.

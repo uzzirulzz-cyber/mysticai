@@ -1,0 +1,56 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - ".github/workflows/android-apk.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Build installable Android APK
+        run: gradle --no-daemon -p android assembleDebug
+
+      - name: Name download
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/MysticAI-Android.apk
+
+      - name: Publish latest APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-latest
+          name: Mystic AI for Android
+          body: |
+            Installable debug-signed Android build of Mystic AI.
+
+            Download `MysticAI-Android.apk` and open it on an Android device. You may need to allow installation from your browser or file manager.
+
+            This is a direct-install preview, not a Play Store release. AI generation requires the Mystic AI server to have its Gemini API key configured.
+          prerelease: true
+          make_latest: false
+          overwrite_files: true
+          files: android/app/build/outputs/apk/debug/MysticAI-Android.apk
