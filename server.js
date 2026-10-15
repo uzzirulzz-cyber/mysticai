@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const buildHandler = require('./api/build');
+const healthHandler = require('./api/health');
 
 const root = __dirname;
 const port = Number(process.env.PORT || 3000);
@@ -35,6 +36,12 @@ function respondJson(res) {
 
 loadLocalEnv();
 http.createServer((req, res) => {
+  if (new URL(req.url, 'http://localhost').pathname === '/api/health') {
+    const adapter = respondJson(res);
+    adapter.end = () => res.end();
+    healthHandler(req, adapter);
+    return;
+  }
   if (req.url === '/api/build') {
     if (req.method !== 'POST') {
       res.writeHead(405, { allow: 'POST', 'content-type': 'application/json' });
