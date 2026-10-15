@@ -1,6 +1,10 @@
 {
   "builds": [
     {
+      "src": "api/health.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "api/build.js",
       "use": "@vercel/node",
       "config": {
@@ -13,6 +17,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "/api/health.js"
+    },
     {
       "source": "/api/build",
       "destination": "/api/build.js"
